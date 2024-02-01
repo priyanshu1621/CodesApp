@@ -189,6 +189,13 @@ exports.sendotp = async (req, res) => {
 		// to be used in case of signup
 
 		// If user found with provided email
+		console.log("Pritint the sendOTP")
+
+		console.log("In authApi in Backend  ", email)
+		
+		console.log(checkUserPresent);
+		
+
 		if (checkUserPresent) {
 			// Return 401 Unauthorized status code with error message
 			return res.status(401).json({
