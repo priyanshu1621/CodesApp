@@ -6,13 +6,13 @@ const ContactFormSection = () => {
   return (
       <div className='mx-auto'>
 
-          <h1>Get In Touch</h1>
+          <h1 className="text-center text-4xl font-semibold">Get In Touch</h1>
           
-          <p>
+          <p className="text-center text-richblack-300 mt-3"> 
               We'd love to here for you, please fill out this form.
           </p>
 
-          <div className='mx-auto flex flex-col items-center justify-between gap-5 mb-[14px]'>
+          <div className="mt-12 mx-auto">
               <ContactUsForm/>
           </div>
       </div>

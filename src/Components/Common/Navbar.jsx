@@ -49,7 +49,7 @@ const Navbar = () => {
     },[] )
 
 
-
+    //    Mathc route for current active on the tab
     const matchRoute = (route) => {
         return matchPath({path:route}, location.pathname);
     }
