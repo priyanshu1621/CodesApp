@@ -35,7 +35,7 @@ const Navbar = () => {
     const fetchSublinks = async() => {
         try{
             const result = await apiConnector("GET", categories.CATEGORIES_API);
-            console.log("Printing Sublinks result:" , result);
+            // console.log("Printing Sublinks result:" , result);
             setSsubLinks(result.data.data);
         }
         catch(error) {
