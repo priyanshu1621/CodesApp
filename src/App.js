@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/Home"
 import Navbar from "./components/common/Navbar"
 import OpenRoute from "./components/core/Auth/OpenRoute"
@@ -17,9 +17,21 @@ import PrivateRoute from './components/core/Auth/PrivateRoute'
 import Error from './pages/Error'
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 import Cart from "./components/core/Dashboard/Cart";
-import { ACCOUNT_TYPE } from './utils/constants'
+import { ACCOUNT_TYPE } from './utils/constants';
+import { useDispatch, useSelector } from "react-redux";
+import AddCourse from "./components/core/Dashboard/AddCourse";
+
 
 function App() {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user } = useSelector((state) => state.profile);
+
+
+
+
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar />
@@ -105,6 +117,15 @@ function App() {
               <>
                 <Route path="dashboard/cart" element={<Cart />} />
                 <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
+              </>
+            )
+          }
+
+          {
+            user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+              <>
+                <Route path="dashboard/add-course" element={<AddCourse />} />
+                
               </>
             )
           }
