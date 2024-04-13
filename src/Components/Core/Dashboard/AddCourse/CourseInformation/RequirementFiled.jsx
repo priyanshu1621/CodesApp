@@ -39,9 +39,11 @@ const RequirementFiled = ({ name, label, register, errors, setValue, getValue })
     }
 
     return (
-        <div>
-
-            <label htmlFor='name'>{label}<sup>*</sup></label>
+        <div className="flex flex-col space-y-2">
+            
+            <label className="text-sm text-richblack-5" htmlFor={name}>
+                {label} <sup className="text-pink-200">*</sup>
+            </label>
             <div>
                 <input
                     type='text'
@@ -62,10 +64,10 @@ const RequirementFiled = ({ name, label, register, errors, setValue, getValue })
 
             {
                 requirementList.length > 0 && (
-                    <ul>
+                    <ul className="mt-2 list-inside list-disc">
                         {
                             requirementList.map((requirement, index) => (
-                                <li key={index} className='flex items-center text-richblack-5'>
+                                <li key={index} className="flex items-center text-richblack-5">
                                     <span>{requirement}</span>
                                     <button
                                         type='button'
@@ -84,7 +86,7 @@ const RequirementFiled = ({ name, label, register, errors, setValue, getValue })
 
             {
                 errors[name] && (
-                    <span>
+                    <span className="ml-2 text-xs tracking-wide text-pink-200">
                         {label} is required
                     </span>
                 )

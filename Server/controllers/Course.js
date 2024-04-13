@@ -14,14 +14,14 @@ exports.createCourse = async (req, res) => {
 			courseDescription,
 			whatYouWillLearn,
 			price,
-			// tag,
+			tag,
 			category,
 			status,
 			instructions,
 		} = req.body;
 
-		// Get thumbnail image from request files
-		// const thumbnail = req.files.thumbnailImage;
+		 //Get thumbnail image from request files
+		const thumbnail = req.files.thumbnailImage;
 
 		// Check if any of the required fields are missing
 		if (
@@ -29,8 +29,8 @@ exports.createCourse = async (req, res) => {
 			!courseDescription ||
 			!whatYouWillLearn ||
 			!price ||
-			// !tag ||
-			// !thumbnail ||
+			!tag ||
+			!thumbnail ||
 			!category
 		) {
 			return res.status(400).json({
@@ -40,8 +40,8 @@ exports.createCourse = async (req, res) => {
 		}
 		if (!status || status === undefined) {
 			status = "Draft";
-        }
-        // Check if the user is an instructor
+		}
+		// Check if the user is an instructor
 		const instructorDetails = await User.findById(userId, {
 			accountType: "Instructor",
 		});
@@ -62,21 +62,21 @@ exports.createCourse = async (req, res) => {
 			});
 		}
 		// Upload the Thumbnail to Cloudinary
-		// const thumbnailImage = await uploadImageToCloudinary(
-		// 	thumbnail,
-		// 	process.env.FOLDER_NAME
-		// );
-		// console.log(thumbnailImage);
-		// Create a new course with the given details
+		const thumbnailImage = await uploadImageToCloudinary(
+			thumbnail,
+			process.env.FOLDER_NAME
+		);
+		console.log(thumbnailImage);
+		 //Create a new course with the given details
 		const newCourse = await Course.create({
 			courseName,
 			courseDescription,
 			instructor: instructorDetails._id,
 			whatYouWillLearn: whatYouWillLearn,
 			price,
-			// tag: tag,
+			tag: tag,
 			category: categoryDetails._id,
-			// thumbnail: thumbnailImage.secure_url,
+			thumbnail: thumbnailImage.secure_url,
 			status: status,
 			instructions: instructions,
 		});
@@ -98,7 +98,7 @@ exports.createCourse = async (req, res) => {
 			{ _id: category },
 			{
 				$push: {
-					course: newCourse._id,
+					courses: newCourse._id,
 				},
 			},
 			{ new: true }
@@ -127,7 +127,7 @@ exports.getAllCourses = async (req, res) => {
 			{
 				courseName: true,
 				price: true,
-				// thumbnail: true,
+				thumbnail: true,
 				instructor: true,
 				ratingAndReviews: true,
 				studentsEnroled: true,
@@ -198,8 +198,6 @@ exports.getCourseDetails = async (req, res) => {
         });
     }
 }
-
-
 
 
 

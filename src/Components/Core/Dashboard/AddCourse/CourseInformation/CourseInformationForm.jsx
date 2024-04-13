@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCourseDetails, editCourseDetails, fetchCourseCategories } from '../../../../../services/operations/courseDetailsAPI';
-import { get, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { HiOutlineCurrencyRupee } from "react-icons/hi2";
 import ChipInput from './Tags';
 import RequirementFiled from './RequirementFiled';
@@ -9,6 +9,7 @@ import IconBtn from '../../../../common/IconBtn';
 import { setStep, setCourse } from '../../../../../slices/courseSlice';
 import toast from 'react-hot-toast';
 import { COURSE_STATUS } from '../../../../../utils/constants';
+import Upload from '../Upload';
 
 const CourseInformationForm = () => {
 
@@ -66,13 +67,15 @@ const CourseInformationForm = () => {
     const currentValue = getValues();
     // comparing the current and the course name value
     if (currentValue.courseTitle !== course.courseName ||
+      currentValue.courseTitle !== course.courseName ||
       currentValue.courseShortDesc !== course.courseDescription ||
       currentValue.coursePrice !== course.price ||
-      // currentValue.courseTags.toString() !== course.tag.toString() ||
+      currentValue.courseTags.toString() !== course.tag.toString() ||
       currentValue.courseBenefits !== course.whatYouWillLearn ||
       currentValue.courseCategory._id !== course.category._id ||
-      // currentValue.courseImage !== course.thumbnail || 
-      currentValue.courseRequirement.toString() !== course.instructions.toString())
+      currentValue.courseRequirements.toString() !==
+      course.instructions.toString() ||
+      currentValue.courseImage !== course.thumbnail)
       return true;
     else {
       return false;
@@ -110,16 +113,27 @@ const CourseInformationForm = () => {
           formData.append("courseName", data.courseCategory);
         }
 
+
         if (currentValues.courseRequirement.toString() !== course.instructions.toString()) {
           formData.append("courseName", JSON.stringify(data.courseRequirement));
         }
-        //! Hw for image and tags 
+        //! Hw for image and tags
+
+        if (currentValues.courseImage !== course.thumbnail) {
+          formData.append("thumbnailImage", data.courseImage)
+        }
+
+        if (currentValues.courseTags.toString() !== course.tag.toString()) {
+          formData.append("tag", JSON.stringify(data.courseTags))
+        }
 
         setLoading(true);
         const result = await editCourseDetails(formData, token);
+        console.log("Printing token", token);
+
         setLoading(false);
         if (result) {
-          setStep(2);
+          dispatch(setStep(2));
           dispatch(setCourse(result));
         }
       }
@@ -136,15 +150,16 @@ const CourseInformationForm = () => {
     formData.append("courseName", data.courseTitle);
     formData.append("courseDescription", data.courseShortDesc);
     formData.append("price", data.coursePrice);
+    formData.append("tag", JSON.stringify(data.courseTags))
     formData.append("whatYouWillLearn", data.courseBenefits);
     formData.append("category", data.courseCategory);
     formData.append("instruction", JSON.stringify(data.courseRequirement));
     formData.append("status", COURSE_STATUS.DRAFT);
-
+    formData.append("thumbnailImage", data.courseImage)
     setLoading(true);
     const result = await addCourseDetails(formData, token);
     if (result) {
-      setStep(2);
+      dispatch(setStep(2));
       dispatch(setCourse(result));
     }
     setLoading(false);
@@ -158,11 +173,12 @@ const CourseInformationForm = () => {
 
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='rounded-md border-richblack-700 bg-richblack-800 p-6 space-y-8'
+      className="space-y-8 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6"
     >
 
       <div>
-        <label htmlFor='courseTitle'>Course Title<sup>*</sup></label>
+        <label className="text-sm text-richblack-5" htmlFor='courseTitle'>
+          Course Title<sup className="text-pink-200">*</sup></label>
         <input
           id='courseTitle'
           placeholder='Enter Course Title'
@@ -171,13 +187,14 @@ const CourseInformationForm = () => {
         />
         {
           errors.courseTitle && (
-            <span>Course Title is required**</span>
+            <span className="ml-2 text-xs tracking-wide text-pink-200">Course Title is required**</span>
           )
         }
       </div>
 
       <div>
-        <label htmlFor='courseShortDesc'>Course Short Course Description<sup>*</sup></label>
+        <label className="text-sm text-richblack-5" htmlFor='courseShortDesc'>
+          Course Short Course Description <sup className="text-pink-200">*</sup></label>
         <textarea
           id='courseShortDesc'
           placeholder='Enter Description'
@@ -186,32 +203,42 @@ const CourseInformationForm = () => {
         />
         {
           errors.courseShortDesc && (
-            <span>Course Description is required**</span>
+            <span className="ml-2 text-xs tracking-wide text-pink-200">
+              Course Description is required**</span>
           )
         }
       </div>
 
 
       <div className='relative'>
-        <label htmlFor='coursePrice'>Course Price<sup>*</sup></label>
+        <label className="text-sm text-richblack-5" htmlFor='coursePrice'>Course Price<sup className="text-pink-200">*</sup></label>
         <textarea
           id='coursePrice'
           placeholder='Enter Course Price'
-          {...register("coursePrice", { required: true })}
-          className=' w-full'
+          {...register("coursePrice", {
+            required: true,
+            pattern: {
+              value: /^(0|[1-9]\d*)(\.\d+)?$/,
+            },
+          })
+
+          }
+          className="form-style w-full !pl-12"
         />
 
-        <HiOutlineCurrencyRupee className='absolute top-1/2 text-richblack-400' />
+        <HiOutlineCurrencyRupee className="absolute left-3 top-1/2 inline-block -translate-y-1/2 text-2xl text-richblack-400" />
         {
           errors.coursePrice && (
-            <span>Course Price is required**</span>
+            <span className="ml-2 text-xs tracking-wide text-pink-200">
+              Course Price is required**</span>
           )
         }
       </div>
 
 
       <div className='t'>
-        <label htmlFor='courseCategory'>Course Category<sup>*</sup></label>
+        <label className="flex flex-col space-y-2" htmlFor='courseCategory'>
+          Course Category<sup className="text-pink-200">*</sup></label>
         <select
           id='courseCategory'
           defaultValue=""
@@ -225,7 +252,8 @@ const CourseInformationForm = () => {
           ))}
         </select>
         {errors.courseCategory && (
-          <span>Course Category is required**</span>
+          <span className="ml-2 text-xs tracking-wide text-pink-200">
+            Course Category is required**</span>
         )}
       </div>
 
@@ -241,6 +269,26 @@ const CourseInformationForm = () => {
       
       /> */}
 
+
+      <ChipInput
+        label="Tags"
+        name="courseTags"
+        placeholder="Enter Tags and press Enter"
+        register={register}
+        errors={errors}
+        setValue={setValue}
+        getValues={getValues}
+      />
+      {/* Course Thumbnail Image */}
+      <Upload
+        name="courseImage"
+        label="Course Thumbnail"
+        register={register}
+        setValue={setValue}
+        errors={errors}
+        editData={editCourse ? course?.thumbnail : null}
+      />
+
       {/* //!HW thumbnail -> create a components for upload thumbnail */}
       {/* <Upload 
           htmlFor=
@@ -253,17 +301,19 @@ const CourseInformationForm = () => {
 
 
       {/* Befefits of course */}
-      <div>
-        <label htmlFor='courseBenefits'>Benefits of the course<sup>**</sup></label>
+      <div className="flex flex-col space-y-2">
+        <label className="text-sm text-richblack-5" htmlFor="courseBenefits">
+          Benefits of the course <sup className="text-pink-200">*</sup>
+        </label>
         <textarea
-          id='courseBenefits'
-          placeholder='Enter benefits of the course'
+          id="courseBenefits"
+          placeholder="Enter benefits of the course"
           {...register("courseBenefits", { required: true })}
-          className='min-h-[130px] w-full'
+          className="form-style resize-x-none min-h-[130px] w-full"
         />
         {errors.courseBenefits && (
-          <span>
-            Benefits of the courese are required
+          <span className="ml-2 text-xs tracking-wide text-pink-200">
+            Benefits of the course is required
           </span>
         )}
       </div>
@@ -288,7 +338,9 @@ const CourseInformationForm = () => {
           editCourse && (
             <button
               onClick={() => dispatch(setStep(2))}
-              className='flex items-center gap-x-2 bg-richblack-300'
+              disabled={loading}
+              className={`flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300
+               py-[8px] px-[20px] font-semibold text-richblack-900`}
             >
               continue Without Saving
             </button>
@@ -303,7 +355,7 @@ const CourseInformationForm = () => {
       </div>
 
 
-    </form>
+    </form >
   )
 }
 
