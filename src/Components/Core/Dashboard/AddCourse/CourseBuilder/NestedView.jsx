@@ -32,7 +32,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
     const handleDeleteSection = async (sectionId) => {
         const result = await deleteSection({
             sectionId,
-            courseid: course._id,
+            courseId: course._id,
             token,
 
         })
@@ -40,19 +40,28 @@ const NestedView = ({ handleChangeEditSectionName }) => {
         if (result) {
             dispatch(setCourse(result))
         }
-         // closing modal
+        // closing modal
         setConfirmationModal(null);
     }
 
     // Delete handler Sub section
-    const handleDeleteSubSection = async(subSectionId, sectionId) => {
+    const handleDeleteSubSection = async (subSectionId, sectionId) => {
         const result = await deleteSubSection({ subSectionId, sectionId, token });
         if (result) {
 
-            // TODO  chek for updation also in subsectionModal also
-            dispatch(setCourse(result));
+            // upadating course data in the new objects course variable
+            const updatedCourseContent = course.courseContent.map((section) =>
+                section._id === sectionId ? result : section);
+            
+            // updating in the slice course by creating the new object
+            const updatedCourse = {
+                ...course, courseContent: updatedCourseContent
+            };
+
+            // TODO  check for updation also in subsectionModal also
+            dispatch(setCourse(updatedCourse));
         }
-         // closing modal
+        // closing modal
         setConfirmationModal(null);
     }
 
@@ -66,7 +75,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
 
                 {
                     course?.courseContent?.map((section) => {
-                        {/* detail tag used here in section with open keyword   means that the hidden content will be visible when the page loads.*/}
+                        {/* detail tag used here in section with open keyword   means that the hidden content will be visible when the page loads.*/ }
                         return <details key={section._id} open>
 
                             <summary className='flex items-center justify-between gap-x-8 border-b-2'>
@@ -78,7 +87,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                                 <div className='flex items-center gap-x-3'>
                                     {/* Edit button */}
                                     <button
-                                        onClick={ () => handleChangeEditSectionName(section._id, section.sectionName)}>
+                                        onClick={() => handleChangeEditSectionName(section._id, section.sectionName)}>
                                         <MdEdit />
                                     </button>
 
@@ -122,8 +131,11 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                                             </div>
 
                                             {/* edit and delete button */}
-
+                                            {/* Here what is happening is that onClick on parent div will affect the whole 
+                                            by over the edit and delete button functionality so we use e.stopPropagation() */}
                                             <div
+                                                onClick={(e)=> e.stopPropagation()}
+                                                
                                                 className='flex items-center gap-x-3'>
                                                 <button
                                                     onClick={() => setEditSubSection({ ...data, sectionId: section._id })}
@@ -153,7 +165,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
 
                                 {/*  Add section button */}
                                 <button
-                                    onClick={ () => setAddSubSection(section._id)}
+                                    onClick={() => setAddSubSection(section._id)}
                                     className='mt-4 flex items-center gap-x-2 text-yellow-50'
                                 >
                                     <AiOutlinePlus />
@@ -188,7 +200,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                         : editSubSection ?
                             (<SubSectionModal
                                 modalData={editSubSection}
-                                setModalData={editSubSection}
+                                setModalData={setEditSubSection}
                                 edit={true}
                             />)
                             : (<div></div>)

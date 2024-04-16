@@ -8,12 +8,13 @@ import { setCourse, setEditCourse, setStep } from '../../../../../slices/courseS
 import toast from 'react-hot-toast';
 import { createSection, updateSection } from '../../../../../services/operations/courseDetailsAPI';
 import NestedView from './NestedView';
+import { MdNavigateNext } from "react-icons/md"
 
 
 const BuilderForm = () => {
 
     // importing the required things
-    const { register,  handleSubmit, setValue, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false);
     const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const BuilderForm = () => {
     const { course } = useSelector((state) => state.course);
 
 
-   
+
 
 
 
@@ -85,105 +86,107 @@ const BuilderForm = () => {
         dispatch(setEditCourse(true));
     }
 
-    const gotonext = () => {
+    const goToNext = () => {
         //  here we are checking the validation that coure atleast have one section and subSection
         if (course.courseContent.length === 0) {
-            toast.error("Please add atleat one section")
-            return;
+            toast.error("Please add atleast one section")
+            return
         }
-        if (course.courseContent.some((section) => section.subSection.length === 0)) {
-            toast.error("Please add at least one lecture in each section")
-            return;
+        if (
+            course.courseContent.some((section) => section.subSection.length === 0)
+        ) {
+            toast.error("Please add atleast one lecture in each section")
+            return
         }
         // if ecverything is  good go to nexrt step
         dispatch(setStep(3));
     }
 
-    
+
 
 
     // Nested loop -> edit section function
     const handleChangeEditSectionName = (sectionId, sectionName) => {
-        if(editSectionName === sectionId ){
-          cancelEdit();
-          return;
+        if (editSectionName === sectionId) {
+            cancelEdit();
+            return;
         }
-        
+
         setEditSectionName(sectionId);
         setValue("sectionName", sectionName);
-      }
+    }
 
 
 
-return (
-    <div className='text-white'>
-        <p>Course Builder</p>
+    return (
+        <div className='text-white'>
+            <p>Course Builder</p>
 
-        <form  onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <label htmlFor='sectionName'>Section Name<sup>*</sup></label>
-                <input
-                    id='sectionName'
-                    placeholder='Add section Name'
-                    {...register("sectionName", { required: true })}
-                    className='w-full'
-                />
-                {
-                    errors.sectionName && (
-                        <span>Section Name is required</span>
-                    )
-                }
-            </div>
-            {/* create sectin add button */}
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div>
+                    <label htmlFor='sectionName'>Section Name<sup>*</sup></label>
+                    <input
+                        id='sectionName'
+                        placeholder='Add section Name'
+                        {...register("sectionName", { required: true })}
+                        className='w-full'
+                    />
+                    {
+                        errors.sectionName && (
+                            <span>Section Name is required</span>
+                        )
+                    }
+                </div>
+                {/* create sectin add button */}
 
-            <div className='mt-10 flex w-full'>
-                <IconBtn
-                    type={"submit"}
-                    text={editSectionName ? "Edit Section Name" : "Create Section"}
-                    outline={true}
-                    customClasses={"text-white"}
-                >
+                <div className='mt-10 flex w-full'>
+                    <IconBtn
+                        type={"submit"}
+                        text={editSectionName ? "Edit Section Name" : "Create Section"}
+                        outline={true}
+                        customClasses={"text-white"}
+                    >
 
-                    <MdAddCircleOutline className='text-yellow-50' size={20} />
+                        <MdAddCircleOutline className='text-yellow-50' size={20} />
+                    </IconBtn>
+
+                    {/* Cancell edit button */}
+                    {
+                        editSectionName && (
+                            <button
+                                type='button'
+                                onClick={cancelEdit}
+                                className='text-sm text-richblack-300 underline ml-10'
+                            >
+                                Cancel Edit
+                            </button>
+                        )
+                    }
+
+                </div>
+            </form>
+
+            {
+                // section state chanfe in coursebuilder
+                course?.courseContent?.length > 0 && (
+                    <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />
+                )
+            }
+
+            <div className='flex justify-end gap-x-3 mt-10'>
+                <button
+                    onClick={goBack}
+                    className='rounded-md cursor-pointer flex items-center'>
+                    Back
+                </button>
+
+                <IconBtn disabled={loading} text="Next" onclick={goToNext}>
+                    <MdNavigateNext />
                 </IconBtn>
-
-                {/* Cancell edit button */}
-                {
-                    editSectionName && (
-                        <button
-                            type='button'
-                            onClick={cancelEdit}
-                            className='text-sm text-richblack-300 underline ml-10'
-                        >
-                            Cancel Edit
-                        </button>
-                    )
-                }
-
             </div>
-        </form>
 
-        {
-            // section state chanfe in coursebuilder
-            course?.courseContent?.length > 0 && (
-                <NestedView handleChangeEditSectionName ={ handleChangeEditSectionName} />
-            )
-        }
-
-        <div className='flex justify-end gap-x-3 mt-10'>
-            <button
-                onClick={goBack}
-                className='rounded-md cursor-pointer flex items-center'>
-                Back
-            </button>
-
-            <IconBtn text="Next" onClick={gotonext}>
-                <BiRightArrow />
-            </IconBtn>
         </div>
-
-    </div>
-)
+    )
 }
 
 export default BuilderForm

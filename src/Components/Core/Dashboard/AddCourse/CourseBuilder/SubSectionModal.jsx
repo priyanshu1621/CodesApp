@@ -5,11 +5,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { createSubSection, updateSubSection } from '../../../../../services/operations/courseDetailsAPI'
 import { setCourse } from '../../../../../slices/courseSlice';
 import toast from 'react-hot-toast';
-import { RxCross1 } from 'react-icons/rx';
+import { RxCross2 } from 'react-icons/rx';
 import Upload from '../Upload'
 import IconBtn from '../../../../common/IconBtn'
 
-const SubSectionModal = ({
+export default function SubSectionModal ({
 
     modalData,
     setModalData,
@@ -17,7 +17,7 @@ const SubSectionModal = ({
     view = false,
     edit = false,
 
-}) => {
+}) {
 
 
     // form 
@@ -25,8 +25,8 @@ const SubSectionModal = ({
         register,
         handleSubmit,
         setValue,
-        formState: {errors},
-        getValue,
+        formState: { errors },
+        getValues,
 
     } = useForm();
 
@@ -44,7 +44,7 @@ const SubSectionModal = ({
     }, []);
 
     const isFormUpdated = () => {
-        const currentValue = getValue();
+        const currentValue = getValues();
         if (currentValue.lectureTitle !== modalData.title ||
             currentValue.lectureDesc !== modalData.description ||
             currentValue.lectureVideo !== modalData.videoUrl) {
@@ -59,7 +59,7 @@ const SubSectionModal = ({
     // handel edit subsection
     const handelEditSubSection = async () => {
 
-        const currentValue = getValue();
+        const currentValue = getValues();
         const formData = new FormData();
 
         formData.append("sectionId", modalData.sectionId);
@@ -81,7 +81,17 @@ const SubSectionModal = ({
         const result = await updateSubSection(formData, token);
         if (result) {
             // TODO same check
-            dispatch(setCourse(result));
+
+            // upadating course data in the new objects course variable
+            const updatedCourseContent = course.courseContent.map((section) =>
+                section._id === modalData.sectionId ? result : section);
+
+            // updating in the slice course by creating the new object
+            const updatedCourse = {
+                ...course, courseContent: updatedCourseContent
+            };
+
+            dispatch(setCourse(updatedCourse));
         }
         setModalData(null);
         setLoading(false);
@@ -113,7 +123,9 @@ const SubSectionModal = ({
         formData.append("sectionId", modalData);
         formData.append("title", data.lectureTitle)
         formData.append("description", data.lectureDesc)
-        formData.append("video", data.lectureVideo)
+      formData.append("video", data.lectureVideo)
+      
+      console.log("Form data in subsectionModal", formData);
         setLoading(true);
 
 
@@ -122,7 +134,18 @@ const SubSectionModal = ({
 
         if (result) {
             // TODO  chek for updation
-            dispatch(setCourse(result));
+
+            // upadating course data in the new objects course variable
+            const updatedCourseContent = course.courseContent.map((section) =>
+                section._id === modalData ? result : section);
+
+            // updating in the slice course by creating the new object
+            const updatedCourse = {
+                ...course, courseContent: updatedCourseContent
+            };
+
+
+            dispatch(setCourse(updatedCourse));
         }
         // closing modal
         setModalData(null);
@@ -136,18 +159,16 @@ const SubSectionModal = ({
             {/* creating the UI for the modals edit , add section , view section */}
             <div>
                 <div>
-                    <p>{view && "viewing"} {add && "Adding"} {edit && "Editing"} Lectures</p>
-                    <button
-                        onClick={() => (!loading ? setModalData(null) : {})}
-                    >
-                        <RxCross1 />
+                    <p>{view && "Viewing"} {add && "Adding"} {edit && "Editing"} Lectures</p>
+                    <button onClick={() => (!loading ? setModalData(null) : {})}>
+                        <RxCross2 className="text-2xl text-richblack-5" />
                     </button>
                 </div>
 
                 {/* Form page on modal */}
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                > 
+                >
                     {/* Upload components */}
                     <Upload
                         name="lectureVideo"
@@ -181,8 +202,8 @@ const SubSectionModal = ({
                         />
                         {
                             errors.lectureDesc && (<span>
-                                    Lecture Description is required
-                                </span>)
+                                Lecture Description is required
+                            </span>)
                         }
                     </div>
 
@@ -205,4 +226,3 @@ const SubSectionModal = ({
     )
 }
 
-export default SubSectionModal
