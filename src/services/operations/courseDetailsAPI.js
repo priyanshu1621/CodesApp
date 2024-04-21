@@ -107,17 +107,7 @@ export const addCourseDetails = async (data, token) => {
 
 // edit the course details
 export const editCourseDetails = async (data, token) => {
-  let result = null;
-
-  // console.log("Data is comming", data);
-  // console.log("Token is comming", token);
-
-  // // Iterate over FormData entries and log each key-value pair
-  // for (let pair of data.entries()) {
-  //   console.log(pair[0] + ', ' + pair[1]);
-  // }
-
-
+  let result = null
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector("POST", EDIT_COURSE_API, data, {
@@ -140,10 +130,6 @@ export const editCourseDetails = async (data, token) => {
 
 // create a section
 export const createSection = async (data, token) => {
-
-  console.log("Data is comming ", data);
-
-
   let result = null
   const toastId = toast.loading("Loading...")
   try {
