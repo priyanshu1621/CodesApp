@@ -84,6 +84,14 @@ export const fetchCourseCategories = async () => {
 
 // add the course details
 export const addCourseDetails = async (data, token) => {
+
+  console.log("Printing the data inside api ", data);
+
+   // Assuming 'formData' is your FormData object
+    // for (let entry of data.entries()) {
+    //   console.log(entry[0] + ': ' + entry[1]);
+    // }
+
   let result = null
   const toastId = toast.loading("Loading...")
   try {

@@ -6,6 +6,7 @@ const RequirementFiled = ({ name, label, register, errors, setValue, getValue })
     const [requirementList, setRequirementList] = useState("");
 
 
+
     useEffect(() => {
         register(name, {
             required: true,
@@ -17,7 +18,6 @@ const RequirementFiled = ({ name, label, register, errors, setValue, getValue })
     // update the field value whenever there id any change in the form
     useEffect(() => {
         setValue(name, requirementList);
-
     }, [requirementList])
 
 
