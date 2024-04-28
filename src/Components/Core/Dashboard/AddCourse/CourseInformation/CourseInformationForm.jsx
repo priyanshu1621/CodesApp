@@ -4,7 +4,7 @@ import { addCourseDetails, editCourseDetails, fetchCourseCategories } from '../.
 import { useForm } from 'react-hook-form';
 import { HiOutlineCurrencyRupee } from "react-icons/hi2";
 import ChipInput from './Tags';
-import RequirementFiled from './RequirementFiled';
+import RequirementsField from './RequirementFiled';
 import IconBtn from '../../../../common/IconBtn';
 import { setStep, setCourse } from '../../../../../slices/courseSlice';
 import toast from 'react-hot-toast';
@@ -308,15 +308,13 @@ const CourseInformationForm = () => {
 
       {/* Requrement  */}
 
-      <RequirementFiled htmlFor='coureseRequirement'
-        name="coureseRequirement"
+      <RequirementsField
+        name="courseRequirements"
         label="Requirements/Instructions"
         register={register}
-        errors={errors}
         setValue={setValue}
+        errors={errors}
         getValues={getValues}
-
-
       />
 
 
