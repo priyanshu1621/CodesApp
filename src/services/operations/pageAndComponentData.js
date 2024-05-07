@@ -13,9 +13,11 @@ export const getCatalogaPageData = async(categoryId) => {
         if(!response?.data?.success)
             throw new Error("Could not Fetch Category page data");
 
-         result = response?.data;
-
+    result = response?.data;
+    
+      // console.log("Printing  the result ", result)
   }
+
   catch(error) {
     console.log("CATALOG PAGE DATA API ERROR....", error);
     toast.error(error.message);
@@ -25,3 +27,4 @@ export const getCatalogaPageData = async(categoryId) => {
   return result;
 }
 
+ 

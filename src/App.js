@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/Home"
 import Navbar from "./components/common/Navbar"
 import OpenRoute from "./components/core/Auth/OpenRoute"
-
+import Settings from "./components/core/Dashboard/Settings";
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import ForgotPassword from "./pages/ForgotPassword";
@@ -117,7 +117,7 @@ function App() {
           } >
 
           <Route path="dashboard/my-profile" element={<MyProfile />} />
-          {/* <Route  path="dashboard/Settings" element={<Settings />} /> */}
+          <Route  path="dashboard/Settings" element={<Settings/>} />
 
 
 
