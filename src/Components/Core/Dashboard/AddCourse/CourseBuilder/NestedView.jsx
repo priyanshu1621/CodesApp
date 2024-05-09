@@ -88,7 +88,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                                     {/* Edit button */}
                                     <button
                                         onClick={() => handleChangeEditSectionName(section._id, section.sectionName)}>
-                                        <MdEdit />
+                                        <MdEdit className="text-xl text-richblack-300"/>
                                     </button>
 
                                     {/* Delete button */}
@@ -103,11 +103,11 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                                                 btn2Handler: () => setConfirmationModal(null)
                                             })
                                         }}>
-                                        <RiDeleteBin6Line />
+                                        <RiDeleteBin6Line  className="text-xl text-richblack-300"/>
                                     </button>
 
                                     {/* small line */}
-                                    <span>|</span>
+                                    <span className="font-medium text-richblack-300">|</span>
 
                                     {/* downAarrow */}
                                     <BiSolidDownArrow className='text-xl text-richblack-300' />
@@ -123,11 +123,11 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                                         <div key={data?.id}
                                             // funtion on click
                                             onClick={() => setViewSubSection(data)}
-                                            className='flex items-center gap-x-3 border-b-2'>
+                                            className="flex cursor-pointer items-center justify-between gap-x-3 border-b-2 border-b-richblack-600 py-2">
 
                                             <div className='flex items-center gap-x-3'>
-                                                <RxDropdownMenu />
-                                                <p>{data.title} </p>
+                                                <RxDropdownMenu className="text-2xl text-richblack-50" />
+                                                <p className="font-semibold text-richblack-50">{data.title} </p>
                                             </div>
 
                                             {/* edit and delete button */}
@@ -140,7 +140,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                                                 <button
                                                     onClick={() => setEditSubSection({ ...data, sectionId: section._id })}
                                                 >
-                                                    <MdEdit />
+                                                    <MdEdit className="text-xl text-richblack-300"/>
 
                                                 </button>
 
@@ -154,7 +154,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                                                         btn2Handler: () => setConfirmationModal(null)
                                                     })}>
 
-                                                    <RiDeleteBin6Line />
+                                                    <RiDeleteBin6Line className="text-xl text-richblack-300"/>
 
                                                 </button>
                                             </div>

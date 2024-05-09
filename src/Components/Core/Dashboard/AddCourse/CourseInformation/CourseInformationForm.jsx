@@ -164,84 +164,95 @@ const CourseInformationForm = () => {
       className="space-y-8 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6"
     >
 
-      <div>
-        <label className="text-sm text-richblack-5" htmlFor='courseTitle'>
-          Course Title<sup className="text-pink-200">*</sup></label>
+      {/* Course Title */}
+      <div className="flex flex-col space-y-2">
+        <label className="text-sm text-richblack-5" htmlFor="courseTitle">
+          Course Title <sup className="text-pink-200">*</sup>
+        </label>
         <input
-          id='courseTitle'
-          placeholder='Enter Course Title'
+          id="courseTitle"
+          placeholder="Enter Course Title"
           {...register("courseTitle", { required: true })}
-          className='w-full'
+          className="form-style w-full"
         />
-        {
-          errors.courseTitle && (
-            <span className="ml-2 text-xs tracking-wide text-pink-200">Course Title is required**</span>
-          )
-        }
+        {errors.courseTitle && (
+          <span className="ml-2 text-xs tracking-wide text-pink-200">
+            Course title is required
+          </span>
+        )}
       </div>
 
-      <div>
-        <label className="text-sm text-richblack-5" htmlFor='courseShortDesc'>
-          Course Short Course Description <sup className="text-pink-200">*</sup></label>
+      {/* Course Short Description */}
+      <div className="flex flex-col space-y-2">
+        <label className="text-sm text-richblack-5" htmlFor="courseShortDesc">
+          Course Short Description <sup className="text-pink-200">*</sup>
+        </label>
         <textarea
-          id='courseShortDesc'
-          placeholder='Enter Description'
+          id="courseShortDesc"
+          placeholder="Enter Description"
           {...register("courseShortDesc", { required: true })}
-          className='min-h-[140px] w-full'
+          className="form-style resize-x-none min-h-[130px] w-full"
         />
-        {
-          errors.courseShortDesc && (
-            <span className="ml-2 text-xs tracking-wide text-pink-200">
-              Course Description is required**</span>
-          )
-        }
+        {errors.courseShortDesc && (
+          <span className="ml-2 text-xs tracking-wide text-pink-200">
+            Course Description is required
+          </span>
+        )}
+      </div>
+
+      {/* Course Price */}
+      <div className="flex flex-col space-y-2">
+        <label className="text-sm text-richblack-5" htmlFor="coursePrice">
+          Course Price <sup className="text-pink-200">*</sup>
+        </label>
+        <div className="relative">
+          <input
+            id="coursePrice"
+            placeholder="Enter Course Price"
+            {...register("coursePrice", {
+              required: true,
+              valueAsNumber: true,
+              pattern: {
+                value: /^(0|[1-9]\d*)(\.\d+)?$/,
+              },
+            })}
+            className="form-style w-full !pl-12"
+          />
+          <HiOutlineCurrencyRupee className="absolute left-3 top-1/2 inline-block -translate-y-1/2 text-2xl text-richblack-400" />
+        </div>
+        {errors.coursePrice && (
+          <span className="ml-2 text-xs tracking-wide text-pink-200">
+            Course Price is required
+          </span>
+        )}
       </div>
 
 
-      <div className='relative'>
-        <label className="text-sm text-richblack-5" htmlFor='coursePrice'>Course Price<sup className="text-pink-200">*</sup></label>
-        <textarea
-          id='coursePrice'
-          placeholder='Enter Course Price'
-          {...register("coursePrice", {
-            required: true,
-            pattern: {
-              value: /^(0|[1-9]\d*)(\.\d+)?$/,
-            },
-          })
-
-          }
-          className="form-style w-full !pl-12"
-        />
-
-        <HiOutlineCurrencyRupee className="absolute left-3 top-1/2 inline-block -translate-y-1/2 text-2xl text-richblack-400" />
-        {
-          errors.coursePrice && (
-            <span className="ml-2 text-xs tracking-wide text-pink-200">
-              Course Price is required**</span>
-          )
-        }
-      </div>
-
-
-      <div className='t'>
-        <label className="flex flex-col space-y-2" htmlFor='courseCategory'>
-          Course Category<sup className="text-pink-200">*</sup></label>
+  {/* Course Category */}
+  <div className="flex flex-col space-y-2">
+        <label className="text-sm text-richblack-5" htmlFor="courseCategory">
+          Course Category <sup className="text-pink-200">*</sup>
+        </label>
         <select
-          id='courseCategory'
-          defaultValue=""
           {...register("courseCategory", { required: true })}
+          defaultValue=""
+          id="courseCategory"
+          className="form-style w-full"
         >
-          <option value="" disabled>Choose a category</option>
-          {!loading && courseCategories.map((category, index) => (
-            <option key={index} value={category?._id} className='text-black'>
-              {category?.name}
-            </option>
-          ))}
+          <option value="" disabled>
+            Choose a Category
+          </option>
+          {!loading &&
+            courseCategories?.map((category, indx) => (
+              <option key={indx} value={category?._id}>
+                {category?.name}
+              </option>
+            ))}
         </select>
         {errors.courseCategory && (
           <span className="ml-2 text-xs tracking-wide text-pink-200">
-            Course Category is required**</span>
+            Course Category is required
+          </span>
         )}
       </div>
 
