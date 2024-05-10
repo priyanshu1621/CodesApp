@@ -28,11 +28,11 @@ function loadScript(src) {
 }
 
 
-// Course buy
+
 export async function buyCourse(token, courses, userDetails, navigate, dispatch) {
     const toastId = toast.loading("Loading...");
     try {
-        // Load the script
+        //load the script
         const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
 
         if (!res) {
@@ -40,24 +40,24 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
             return;
         }
 
-        // Initiate the order
+        //initiate the order
         const orderResponse = await apiConnector("POST", COURSE_PAYMENT_API,
             { courses },
             {
                 Authorization: `Bearer ${token}`,
-            });
+            })
 
         if (!orderResponse.data.success) {
             throw new Error(orderResponse.data.message);
         }
         console.log("PRINTING orderResponse", orderResponse);
-        // Options
+        //options
         const options = {
             key: process.env.RAZORPAY_KEY,
             currency: orderResponse.data.message.currency,
             amount: `${orderResponse.data.message.amount}`,
             order_id: orderResponse.data.message.id,
-            name: "CodeApp",
+            name: "CodeAPP",
             description: "Thank You for Purchasing the Course",
             image: rzpLogo,
             prefill: {
@@ -65,18 +65,17 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
                 email: userDetails.email
             },
             handler: function (response) {
-                // Send successful email
+                //send successful wala mail
                 sendPaymentSuccessEmail(response, orderResponse.data.message.amount, token);
-                // Verify payment
+                //verifyPayment
                 verifyPayment({ ...response, courses }, token, navigate, dispatch);
             }
         }
-
-        // Dialog box open for razorpay
+        //miss hogya tha 
         const paymentObject = new window.Razorpay(options);
         paymentObject.open();
         paymentObject.on("payment.failed", function (response) {
-            toast.error("Oops, payment failed");
+            toast.error("oops, payment failed");
             console.log(response.error);
         })
 
@@ -87,6 +86,7 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
     }
     toast.dismiss(toastId);
 }
+
 
 // Function to send payment success email
 async function sendPaymentSuccessEmail(response, amount, token) {
