@@ -26,7 +26,7 @@ exports.resetPasswordToken = async (req, res) => {
             { email: email },
             {
                 token: token,
-                resetPasswordExpires: Date.now() + 3600000,
+                resetPasswordExpires: Date.now() + 86400000,
             },
             { new: true }
         );
