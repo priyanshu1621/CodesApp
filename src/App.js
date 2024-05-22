@@ -2,7 +2,8 @@ import React from "react";
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
 // import Home from "./pages/Home";  // Ensure this matches exactly
-import Home from './pages/Home'
+// import Home from './pages/Home'
+import HomePage from "./pages/HomePage";
 import Navbar from "./components/common/Navbar";
 import OpenRoute from "./components/core/Auth/OpenRoute";
 
@@ -42,7 +43,8 @@ function App() {
       <Navbar />
       <Routes>
         {/* <Route path="/" element={<Home />} /> */}
-         <Route path="/" element={<Home/>} />
+         {/* <Route path="/" element={<Home/>} /> */}
+         <Route path="/" element={<HomePage/>} />
 
         <Route path="catalog/:catalogName" element={<Catalog />} />
         <Route path="courses/:courseId" element={<CourseDetails />} />
