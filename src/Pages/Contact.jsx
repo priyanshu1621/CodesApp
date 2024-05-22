@@ -69,6 +69,7 @@ import React from 'react'
 import ContactDetails from '../components/ContactPages/ContactDetails'
 import ContactForm from '../components/ContactPages/ContactForm'
 import Footer from '../components/common/Footer';
+import ReviewSlider from '../components/common/ReviewSlider';
 
 const Contact = () => {
   return (
@@ -92,6 +93,7 @@ const Contact = () => {
           Reviews from other learners
         </h1>
         {/* <ReviewSlider /> */}
+        <ReviewSlider/>
       </div>
       <Footer/>
 

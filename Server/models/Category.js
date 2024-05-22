@@ -7,6 +7,11 @@ const categorySchema = new mongoose.Schema({
 		required: true,
 	},
 	description: { type: String },
+	instructor: {
+		type: mongoose.Schema.Types.ObjectId,
+		required: true,
+		ref: "user",
+	},
 	courses: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
