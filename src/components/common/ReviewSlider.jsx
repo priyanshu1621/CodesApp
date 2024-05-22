@@ -30,7 +30,7 @@ const ReviewSlider = () => {
     useEffect(() => {
         const fetchAllReviews = async () => {
             const { data } = await apiConnector("GET", ratingsEndpoints.REVIEWS_DETAILS_API)
-            console.log("Logging response in rating ", data);
+            // console.log("Logging response in rating ", data);
 
 
 
@@ -38,7 +38,7 @@ const ReviewSlider = () => {
                 setReviews(data?.data);
             }
 
-            console.log("Priniting revirews", reviews)
+            // console.log("Priniting revirews", reviews)
         }
         fetchAllReviews();
     }, [])
