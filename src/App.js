@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
-// import Home from "./pages/Home";  // Ensure this matches exactly
-// import Home from './pages/Home'
-import HomePage from "./pages/HomePage";
+
+
+// import HomePage from "./pages/HomePage";
 import Navbar from "./components/common/Navbar";
 import OpenRoute from "./components/core/Auth/OpenRoute";
 
@@ -31,6 +31,7 @@ import CourseDetails from "./pages/CourseDetails";
 import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
+import Home from "./pages/Home";
 
 function App() {
   const dispatch = useDispatch();
@@ -42,9 +43,9 @@ function App() {
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar />
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
+        <Route path="/" element={<Home />} />
          {/* <Route path="/" element={<Home/>} /> */}
-         <Route path="/" element={<HomePage/>} />
+         {/* <Route path="/" element={<HomePage/>} /> */}
 
         <Route path="catalog/:catalogName" element={<Catalog />} />
         <Route path="courses/:courseId" element={<CourseDetails />} />
