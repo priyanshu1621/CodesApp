@@ -32,10 +32,12 @@ function Home() {
           </div>
         </Link>
 
+        {/* Unlock your potential with coding abilities for a brighter future */}
+
         {/* Heading */}
         <div className="text-center text-4xl font-semibold">
-          Empower Your Future with
-          <HighlightText text={"Coding Skills"} />
+        Unlock your potential with
+          <HighlightText text={"coding abilities for a brighter future"} />
         </div>
 
         {/* SubHeading */}
@@ -59,7 +61,7 @@ function Home() {
         {/* video */}
         <div className="mx-3 my-7 shadow-[10px_-5px_50px_-5px] shadow-blue-200">
           <video
-            className="shadow-[20px_20px_rgba(255,255,255)]"
+            // className="shadow-[20px_20px_rgba(255,255,255)]"
             muted
             loop
             autoPlay
