@@ -22,7 +22,7 @@
 ### :camera: Screenshots
 <div align="center"> <a href="https://codes-app.vercel.app"><img src="https://github.com/priyanshu1621/CodesApp/blob/main/ScreenShots/HomePage.png" alt='image' width='650'/></a> </div>
 <div align="center"> <a href="https://codes-app.vercel.app"><img src="https://github.com/priyanshu1621/CodesApp/blob/main/ScreenShots/CoursesPage.png" alt='image' width='650'/></a> </div>
-<div align="center"> <a href="https://codes-app.vercel.app"><img src="https://github.com/priyanshu1621/codesapp/blob/56aafe56bc45ff302c7a178d200be927619721fa/src/assets/Screenshots/Screenshot%20(40).png" alt='image' width='650'/></a> </div>
+<div align="center"> <a href="https://codes-app.vercel.app"><img src="https://github.com/priyanshu1621/CodesApp/blob/main/ScreenShots/ScreenShot.png" alt='image' width='650'/></a> </div>
 <div align="center"> <a href="https://codes-app.vercel.app"><img src="https://github.com/priyanshu1621/CodesApp/blob/main/ScreenShots/CourseProgress.png" alt='image' width='650'/></a> </div>
 <div align="center"> <a href="https://codes-app.vercel.app"><img src="https://github.com/priyanshu1621/CodesApp/blob/main/ScreenShots/Footer.png" alt='image' width='650'/></a> </div>
 <div align="center"> <a href="https://codes-app.vercel.app"><img src="https://github.com/priyanshu1621/CodesApp/blob/main/ScreenShots/MailScreenshot.png" alt='image' width='650'/></a> </div>
