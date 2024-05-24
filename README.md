@@ -22,7 +22,6 @@
 ### :camera: Screenshots
 <div align="center"> <a href="https://codes-app.vercel.app"><img src="https://github.com/priyanshu1621/CodesApp/blob/main/ScreenShots/HomePage.png" alt='image' width='650'/></a> </div>
 <div align="center"> <a href="https://codes-app.vercel.app"><img src="https://github.com/priyanshu1621/CodesApp/blob/main/ScreenShots/CoursesPage.png" alt='image' width='650'/></a> </div>
-<div align="center"> <a href="https://codes-app.vercel.app"><img src="https://github.com/priyanshu1621/CodesApp/blob/main/ScreenShots/ScreenShot.png" alt='image' width='650'/></a> </div>
 <div align="center"> <a href="https://codes-app.vercel.app"><img src="https://github.com/priyanshu1621/CodesApp/blob/main/ScreenShots/CourseProgress.png" alt='image' width='650'/></a> </div>
 <div align="center"> <a href="https://codes-app.vercel.app"><img src="https://github.com/priyanshu1621/CodesApp/blob/main/ScreenShots/Footer.png" alt='image' width='650'/></a> </div>
 <div align="center"> <a href="https://codes-app.vercel.app"><img src="https://github.com/priyanshu1621/CodesApp/blob/main/ScreenShots/MailScreenshot.png" alt='image' width='650'/></a> </div>
