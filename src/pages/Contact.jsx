@@ -74,29 +74,25 @@ import ReviewSlider from '../components/common/ReviewSlider';
 const Contact = () => {
   return (
     <div>
-
-      <div className='mx-auto mt-20 flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-white lg:flex-row '>
-        <div className='lg:w-[40%]' >
+      <div className="mx-auto mt-20 flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-white lg:flex-row">
+        {/* Contact Details */}
+        <div className="lg:w-[40%]">
           <ContactDetails />
         </div>
 
-        {/* contactForm */}
-
-        <div className='lg:w-[60%]' >
+        {/* Contact Form */}
+        <div className="lg:w-[60%] mb-4 sm:mb-0">
           <ContactForm />
         </div>
       </div>
-
-      <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
+      <div className="relative hidden mx-auto my-20 sm:flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
         {/* Reviws from Other Learner */}
         <h1 className="text-center text-4xl font-semibold mt-8">
           Reviews from other learners
         </h1>
-        {/* <ReviewSlider /> */}
-        <ReviewSlider/>
+        <ReviewSlider />
       </div>
-      <Footer/>
-
+      <Footer />
     </div>
   )
 }

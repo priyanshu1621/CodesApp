@@ -44,8 +44,8 @@ const ReviewSlider = () => {
     }, [])
 
     return (
-        <div className="text-white">
-            <div className="my-[50px] h-[184px] max-w-maxContentTab lg:max-w-maxContent">
+        <div className="text-white w-full">
+            <div className="my-[50px] h-[184px]max-w-maxContentTab lg:max-w-maxContent">
                 <Swiper
                     slidesPerView={4}
                     spaceBetween={25}
@@ -56,7 +56,7 @@ const ReviewSlider = () => {
                         disableOnInteraction: false,
                     }}
                     modules={[FreeMode, Pagination, Autoplay]}
-                    className="w-full "
+                    className="w-full"
                 >
                     {reviews.map((review, i) => {
                         return (
@@ -103,9 +103,8 @@ const ReviewSlider = () => {
                                     </div>
                                 </div>
                             </SwiperSlide>
-                        )
+                        );
                     })}
-                   
                 </Swiper>
             </div>
         </div>
