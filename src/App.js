@@ -32,11 +32,13 @@ import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
 import Home from "./pages/Home";
+// import CreateCourse from "./components/core/Dashboard/AdminDashboard/CreateCourse";
+import { CreateCategory } from "./components/core/Dashboard/AdminDashboard/index";
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const { user } = useSelector((state) => state.profile);
 
   return (
@@ -44,13 +46,13 @@ function App() {
       <Navbar />
       <Routes>
         {/* <Route path="/" element={<Home />} /> */}
-        <Route path="/" element={<Home/>} />
-         {/* <Route path="/" element={<Home/>} /> */}
-         {/* <Route path="/" element={<HomePage/>} /> */}
+        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home/>} /> */}
+        {/* <Route path="/" element={<HomePage/>} /> */}
 
         <Route path="catalog/:catalogName" element={<Catalog />} />
         <Route path="courses/:courseId" element={<CourseDetails />} />
-        
+
         <Route path="signup" element={
           <OpenRoute>
             <Signup />
@@ -115,6 +117,18 @@ function App() {
             </>
           )}
         </Route>
+
+
+        <Route>
+
+          {user?.accountType === ACCOUNT_TYPE.ADMIN && (
+            <>
+              <Route path="dashboard/createCategory" element={<CreateCategory />} />
+            </>
+          )}
+        </Route>
+
+
 
         <Route path="*" element={<Error />} />
       </Routes>

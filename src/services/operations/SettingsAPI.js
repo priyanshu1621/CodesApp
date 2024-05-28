@@ -33,8 +33,17 @@ export function updateDisplayPicture(token, formData) {
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-      toast.success("Display Picture Updated Successfully")
-      dispatch(setUser(response.data.data))
+
+
+      localStorage.setItem("user", JSON.stringify(response.data.updatedProfile));
+      toast.success("Display Picture Updated Successfully");
+      dispatch(setUser(response.data.updatedProfile));
+
+
+
+
+      // toast.success("Display Picture Updated Successfully")
+      // dispatch(setUser(response.data.data))
     } catch (error) {
       console.log("UPDATE_DISPLAY_PICTURE_API API ERROR............", error)
       toast.error("Could Not Update Display Picture")
@@ -46,29 +55,39 @@ export function updateDisplayPicture(token, formData) {
 export function updateProfile(token, formData) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
+
     try {
+
+      console.log("Form Data - ", formData)
       const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
         Authorization: `Bearer ${token}`,
       })
+
       console.log("UPDATE_PROFILE_API API RESPONSE............", response)
 
       // Log the entire response.data object
-      console.log("Response Data:", response.data);
+      // console.log("Response Data:", response.data);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
       }
 
+
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      toast.success("Display Picture Updated Successfully");
+      dispatch(setUser(response.data.user));
+
       // Access the profile object and extract user details
-      const updatedProfile = response.data.profile;
+      // const updatedProfile = response.data.profile;
+      // // Now you can access the user details from updatedProfile
+      // const userImage = updatedProfile?.image || `https://api.dicebear.com/5.x/initials/svg?seed=${updatedProfile?.firstName} ${updatedProfile?.lastName}`;
 
-      // Now you can access the user details from updatedProfile
-      const userImage = updatedProfile?.image || `https://api.dicebear.com/5.x/initials/svg?seed=${updatedProfile?.firstName} ${updatedProfile?.lastName}`;
+      // // Dispatch setUser action with updated user details
+      // dispatch(setUser({ ...updatedProfile, image: userImage }));
 
-      // Dispatch setUser action with updated user details
-      dispatch(setUser({ ...updatedProfile, image: userImage }));
+      // toast.success("Profile Updated Successfully");
 
-      toast.success("Profile Updated Successfully");
+
     } catch (error) {
       console.log("UPDATE_PROFILE_API API ERROR............", error)
       toast.error("Could Not Update Profile")

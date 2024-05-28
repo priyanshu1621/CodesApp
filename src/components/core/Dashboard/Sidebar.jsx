@@ -43,6 +43,11 @@ export default function Sidebar() {
             link={{ name: "Settings", path: "/dashboard/settings" }}
             iconName="VscSettingsGear"
           />
+          {/* Add Create Category link */}
+          <SidebarLink
+            link={{ name: "Create_Category", path: "/dashboard/createCategory" }} // Define path for Create Category
+            iconName="VscTag" // Choose an appropriate icon
+          />
           <button
             onClick={() =>
               setConfirmationModal({

@@ -13,6 +13,9 @@ export default function EditProfile() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+
+  // console.log("Use" , user)
+
   const {
     register,
     handleSubmit,
@@ -23,6 +26,7 @@ export default function EditProfile() {
     // console.log("Form Data - ", data)
     try {
       dispatch(updateProfile(token, data))
+
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message)
     }

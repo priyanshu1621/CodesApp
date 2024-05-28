@@ -10,25 +10,30 @@ const { convertSecondsToDuration } = require("../utils/secToDuration");
 // Method for updating a profile
 exports.updateProfile = async (req, res) => {
 	try {
-		const { dateOfBirth = "", about = "", contactNumber } = req.body;
+		const { dateOfBirth = "", about = "", contactNumber, gender } = req.body;
 		const id = req.user.id;
 
 		// Find the profile by id
 		const userDetails = await User.findById(id);
 		const profile = await Profile.findById(userDetails.additionalDetails);
 
+
 		// Update the profile fields
 		profile.dateOfBirth = dateOfBirth;
 		profile.about = about;
 		profile.contactNumber = contactNumber;
+		profile.gender = gender;
 
 		// Save the updated profile
 		await profile.save();
 
+		// updated user isko bhejna hai front end main
+		const user = await User.findById({ _id: id }).populate("additionalDetails");
+
 		return res.json({
 			success: true,
 			message: "Profile updated successfully",
-			profile,
+			user,
 		});
 	} catch (error) {
 		console.log(error);
@@ -112,7 +117,7 @@ exports.updateDisplayPicture = async (req, res) => {
       res.send({
         success: true,
         message: `Image Updated successfully`,
-        data: updatedProfile,
+         updatedProfile,
       })
     } catch (error) {
       return res.status(500).json({
