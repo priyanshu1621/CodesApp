@@ -32,7 +32,7 @@ import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
 import Home from "./pages/Home";
-// import CreateCourse from "./components/core/Dashboard/AdminDashboard/CreateCourse";
+// import AdminDashboard from "./components/core/Dashboard/AdminDashboard/AdminDashboard";
 import { CreateCategory } from "./components/core/Dashboard/AdminDashboard/index";
 
 function App() {
@@ -45,11 +45,10 @@ function App() {
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar />
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
+     
         <Route path="/" element={<Home />} />
-        {/* <Route path="/" element={<Home/>} /> */}
-        {/* <Route path="/" element={<HomePage/>} /> */}
-
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="catalog/:catalogName" element={<Catalog />} />
         <Route path="courses/:courseId" element={<CourseDetails />} />
 
@@ -78,19 +77,19 @@ function App() {
             <UpdatePassword />
           </OpenRoute>
         } />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
+        
 
         <Route element={
           <PrivateRoute>
             <Dashboard />
           </PrivateRoute>
         }>
-          <Route path="dashboard/my-profile" element={<MyProfile />} />
+          
           <Route path="dashboard/settings" element={<Settings />} />
 
           {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
+            <Route path="dashboard/my-profile" element={<MyProfile />} />
               <Route path="dashboard/cart" element={<Cart />} />
               <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
             </>
@@ -98,12 +97,24 @@ function App() {
 
           {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
             <>
+            <Route path="dashboard/my-profile" element={<MyProfile />} />
               <Route path="dashboard/instructor" element={<Instructor />} />
               <Route path="dashboard/add-course" element={<AddCourse />} />
               <Route path="dashboard/my-courses" element={<MyCourses />} />
               <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} />
             </>
           )}
+
+
+          {user?.accountType === ACCOUNT_TYPE.ADMIN && (
+            <>
+              <Route path="dashboard/my-profile" element={<MyProfile />} />
+              <Route path="dashboard/createCategory" element={<CreateCategory />} />
+            </>
+          )}
+
+
+
         </Route>
 
         <Route element={
@@ -119,15 +130,7 @@ function App() {
         </Route>
 
 
-        <Route>
-
-          {user?.accountType === ACCOUNT_TYPE.ADMIN && (
-            <>
-              <Route path="dashboard/createCategory" element={<CreateCategory />} />
-            </>
-          )}
-        </Route>
-
+       
 
 
         <Route path="*" element={<Error />} />

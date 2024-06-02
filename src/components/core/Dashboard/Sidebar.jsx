@@ -31,7 +31,9 @@ export default function Sidebar() {
       <div className="flex h-[calc(100vh-3.5rem)] min-w-[220px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 py-10">
         <div className="flex flex-col">
           {sidebarLinks.map((link) => {
-            if (link.type && user?.accountType !== link.type) return null
+            if (link.type && user?.accountType !== link.type) {
+              return null
+            }
             return (
               <SidebarLink key={link.id} link={link} iconName={link.icon} />
             )
@@ -43,11 +45,11 @@ export default function Sidebar() {
             link={{ name: "Settings", path: "/dashboard/settings" }}
             iconName="VscSettingsGear"
           />
-          {/* Add Create Category link */}
+          {/* Add Create Category link
           <SidebarLink
             link={{ name: "Create_Category", path: "/dashboard/createCategory" }} // Define path for Create Category
             iconName="VscTag" // Choose an appropriate icon
-          />
+          /> */}
           <button
             onClick={() =>
               setConfirmationModal({

@@ -1,9 +1,11 @@
 import { toast } from "react-hot-toast"
-
+import axios from "axios";
 import { updateCompletedLectures } from "../../slices/viewCourseSlice"
 // import { setLoading } from "../../slices/profileSlice";
 import { apiConnector } from "../apiconnector"
 import { courseEndpoints } from "../apis"
+
+const API_BASE_URL = "http://localhost:4000/api/v1";
 
 const {
   COURSE_DETAILS_API,
@@ -81,6 +83,59 @@ export const fetchCourseCategories = async () => {
   }
   return result
 }
+
+
+
+export const createCategory = async (categoryData, token) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/createCategory`, categoryData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!response?.data?.success) {
+      throw new Error("Could Not Create Category");
+    }
+    toast.success("Category Created Successfully");
+    return response.data.data;
+  } catch (error) {
+    console.log("CREATE_CATEGORY_API API ERROR............", error);
+    toast.error(error.message);
+    throw error;
+  }
+};
+
+export const updateCategory = async (categoryId, categoryData, token) => {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/getCaterories/${categoryId}`, categoryData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!response?.data?.success) {
+      throw new Error("Could Not Update Category");
+    }
+    toast.success("Category Updated Successfully");
+    return response.data.data;
+  } catch (error) {
+    console.log("UPDATE_CATEGORY_API API ERROR............", error);
+    toast.error(error.message);
+    throw error;
+  }
+};
+
+export const deleteCategory = async (categoryId, token) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/getCaterories/${categoryId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!response?.data?.success) {
+      throw new Error("Could Not Delete Category");
+    }
+    toast.success("Category Deleted Successfully");
+    return response.data.data;
+  } catch (error) {
+    console.log("DELETE_CATEGORY_API API ERROR............", error);
+    toast.error(error.message);
+    throw error;
+  }
+};
 
 // add the course details
 export const addCourseDetails = async (data, token) => {

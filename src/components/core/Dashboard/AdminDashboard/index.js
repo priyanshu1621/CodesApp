@@ -8,32 +8,6 @@ export const CreateCategory = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // const fetchCategories = async () => {
-    //     try {
-    //         const response = await axios.get('http://localhost:4000/api/v1/getCaterories');
-    //         setCategories(response.data);
-    //         setLoading(false);
-    //     } catch (error) {
-    //         setError('Failed to fetch categories');
-    //         setLoading(false);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     fetchCategories();
-    // }, []);
-
-    // const handleCategoryAdded = () => {
-    //     fetchCategories();
-    // };
-
-    // const handleCategoryUpdated = () => {
-    //     fetchCategories();
-    // };
-
-    // const handleCategoryDeleted = () => {
-    //     fetchCategories();
-    // };
 
     return (
         <div>
@@ -50,3 +24,5 @@ export const CreateCategory = () => {
         </div>
     );
 };
+
+

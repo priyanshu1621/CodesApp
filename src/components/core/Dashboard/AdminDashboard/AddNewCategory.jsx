@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import { toast } from "react-hot-toast";
+
 
 export const AddNewCategory = () => {
 
@@ -8,6 +10,7 @@ export const AddNewCategory = () => {
     const [categoryDescription, setCategoryDescription] = useState('');
 
     const handleSubmit = async (e) => {
+        const toastId = toast.loading("Loading...");
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:4000/api/v1/createCategory', {
@@ -15,11 +18,13 @@ export const AddNewCategory = () => {
                 description: categoryDescription,
             });
             console.log('Category created:', response.data);
+            toast.success("Category Created");
             setCategoryName('');
             setCategoryDescription('');
         } catch (error) {
             console.error('Error creating category:', error);
         }
+        toast.dismiss(toastId);
     };
 
 
